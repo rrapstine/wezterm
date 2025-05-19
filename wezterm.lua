@@ -10,12 +10,15 @@ local bar = wezterm.plugin.require 'https://github.com/adriankarlen/bar.wezterm'
 -- Create a variable for the multiplexer layer
 local mux = wezterm.mux
 
--- Set local PATH
--- This is needed on MacOS since Finder does not pass $PATH to Wezterm
--- TODO: Check the OS so that this is only done on MacOS
--- config.set_environment_variables = {
---   PATH = '/opt/homebrew/bin:' .. os.getenv 'PATH',
--- }
+-- Check if current OS is MacOS Silicon
+local is_macos = wezterm.target_triple:find 'apple%-darwin'
+
+-- Set local PATH on MacOS
+if is_macos then
+  config.set_environment_variables = {
+    PATH = '/opt/homebrew/bin:' .. os.getenv 'PATH',
+  }
+end
 
 -- Set the color scheme
 config.color_scheme = 'catppuccin-mocha'
@@ -26,11 +29,19 @@ wezterm.on('gui-startup', function()
   window:gui_window():maximize()
 end)
 
+-- Smoother animation
+config.max_fps = 120
+
 -- Window configuration
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.9
 config.window_decorations = 'RESIZE'
 config.hide_tab_bar_if_only_one_tab = true
 config.show_new_tab_button_in_tab_bar = false
+
+-- Set blur on MacOS
+if is_macos then
+  config.macos_window_background_blur = 10
+end
 
 -- Font settings
 config.font = wezterm.font 'Hack Nerd Font'
@@ -58,7 +69,7 @@ config.keys = {
       args = { 'nvim', wezterm.config_file },
     },
   },
-  { key = 'R', mods = 'ALT', action = wezterm.action.ReloadConfiguration },
+  { key = 'r', mods = 'ALT', action = wezterm.action.ReloadConfiguration },
   { key = 'n', mods = 'ALT', action = wezterm.action.SpawnWindow },
   { key = 't', mods = 'ALT', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
   { key = 'q', mods = 'ALT', action = wezterm.action.CloseCurrentPane { confirm = false } },
