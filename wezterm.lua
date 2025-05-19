@@ -21,10 +21,10 @@ end
 config.color_scheme = 'catppuccin-mocha'
 
 -- Maximize the window on startup
-wezterm.on('gui-startup', function()
-  local tab, pane, window = mux.spawn_window {}
-  window:gui_window():maximize()
-end)
+-- wezterm.on('gui-startup', function()
+--   local tab, pane, window = mux.spawn_window {}
+--   window:gui_window():maximize()
+-- end)
 
 -- Smoother animation
 config.max_fps = 120
@@ -32,6 +32,7 @@ config.max_fps = 120
 -- Window configuration
 config.window_background_opacity = 0.9
 config.window_decorations = 'RESIZE'
+
 config.window_padding = config.window_padding or {}
 config.window_padding.left = 4
 config.window_padding.right = 4
