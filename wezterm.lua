@@ -30,7 +30,7 @@ config.color_scheme = 'catppuccin-mocha'
 config.max_fps = 120
 
 -- Window configuration
-config.window_background_opacity = 0.9
+-- config.window_background_opacity = 0.9
 config.window_decorations = 'RESIZE'
 
 config.window_padding = config.window_padding or {}
