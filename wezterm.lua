@@ -4,10 +4,6 @@ local wezterm = require 'wezterm'
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- Pull in plugins
--- local bar = wezterm.plugin.require 'https://github.com/adriankarlen/bar.wezterm'
--- local bar_config = require 'plugins/bar'
-
 -- Create a variable for the multiplexer layer
 local mux = wezterm.mux
 
@@ -121,7 +117,6 @@ config.keys = {
 }
 
 -- Initialize plugins
--- bar.apply_to_config(config, bar_config)
 require 'plugins/tabline'
 
 -- Return the configuration to wezterm
