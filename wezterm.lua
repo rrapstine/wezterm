@@ -10,21 +10,27 @@ local mux = wezterm.mux
 -- Check if current OS is MacOS Silicon
 local is_macos = wezterm.target_triple:find 'apple%-darwin'
 
--- Set local PATH on MacOS
-if is_macos then
-  config.set_environment_variables = {
-    PATH = '/opt/homebrew/bin:' .. os.getenv 'PATH',
-  }
-end
-
 -- Set the color scheme
 config.color_scheme = 'catppuccin-mocha'
 
--- Maximize the window on startup
--- wezterm.on('gui-startup', function()
---   local tab, pane, window = mux.spawn_window {}
---   window:gui_window():maximize()
--- end)
+-- MacOS Specific Settings
+if is_macos then
+  -- Set local PATH on MacOS
+  config.set_environment_variables = {
+    PATH = '/opt/homebrew/bin:' .. os.getenv 'PATH',
+  }
+
+  -- Maximize the window on startup
+  wezterm.on('gui-startup', function()
+    local tab, pane, window = mux.spawn_window {}
+    window:gui_window():maximize()
+  end)
+
+  -- Set blur on MacOS
+  if is_macos then
+    config.macos_window_background_blur = 10
+  end
+end
 
 -- Smoother animation
 config.max_fps = 120
@@ -50,11 +56,6 @@ config.colors.tab_bar = config.colors.tab_bar or {}
 config.colors.tab_bar.background = 'transparent'
 
 config.status_update_interval = 500
-
--- Set blur on MacOS
-if is_macos then
-  config.macos_window_background_blur = 10
-end
 
 -- Font settings
 config.font = wezterm.font 'Hack Nerd Font'
